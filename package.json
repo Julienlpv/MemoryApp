@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Julienlpv/MemoryApp/issues"
   },
-  "homepage": "https://github.com/Julienlpv/MemoryApp#readme"
+  "homepage": "https://github.com/Julienlpv/MemoryApp#readme",
+  "dependencies": {
+    "vue-router": "^4.1.6"
+  }
 }
