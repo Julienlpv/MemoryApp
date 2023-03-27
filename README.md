@@ -1,35 +1,78 @@
-# memoryAppFront
+# memoryApp
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+## Déploiement
+### local
+```bash
+npm i
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
+```bash
 npm run dev
 ```
+### Mise en prod
+Si on est CHAUD
 
-### Compile and Minify for Production
+<hr>
 
-```sh
-npm run build
-```
 
-### Lint with [ESLint](https://eslint.org/)
+## Authentification des utilisateurs
+### Gestion du store
 
-```sh
-npm run lint
+<hr>
+
+## Gestion des catégories
+
+<hr>
+
+## Création de cartes
+### Recto-verso
+Question - réponse pour chaque carte
+
+<hr>
+
+## Création de listes - thèmes
+
+<hr>
+
+## Partage et import de listes
+
+<hr>
+
+## Préparer la OU les liste/s
+* Choix du nombre de cartes ajoutées / jour
+* Choix du nombre de niveaux
+
+<hr>
+
+## Faire les cartes du jour des différentes listes
+
+<hr>
+
+## PWA
+### Service Worker
+Fonctionnable hors ligne
+### Manifest
+### Notification push
+Mettre en place un rappel quotidien
+
+
+<hr>
+
+## Techno
+* VueJS 3
+* Store pinia
+* vue-router
+
+<hr>
+
+## Architecture
+
+## Suivi de projet
+
+```mermaid
+flowchart TD
+    A[Initialisation du projet] --> B(Branche Samy)
+    A[Initialisation du projet] --> C(Branche Julien)
+    C --> D(Gestion des utilisateurs)
+    D --> E
+    B --> E(Merge 1)
 ```
