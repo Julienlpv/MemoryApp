@@ -6,6 +6,14 @@
 
         <label for="answer">Réponse :</label>
         <input type="text" id="answer" v-model="cardData.answer" required />
+        
+        <select v-model="selected">
+            <option disabled value="">Choisissez</option>
+            <option v-for="option in options" v-bind:key="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Sélectionné : {{ selected }}</span>
 
         <button type="submit">Enregistrer</button>
     </form>
@@ -22,15 +30,15 @@ export default {
     },
     setup(props) {
         const quizStore = useQuizStore();
-        const cardData = ref(props.initialValues || { question: '', answer: '' });
-
+        const cardData = ref(props.initialValues || { question: '', answer: '', category: '' });
+        
         const submitForm = () => {
             if (props.cardIndex !== undefined) {
                 quizStore.updateCard(props.cardIndex, cardData.value);
             } else {
                 quizStore.addCard(cardData.value);
             }
-            cardData.value = { question: '', answer: '' };
+            cardData.value = { question: '', answer: '', category: '' };
         };
 
         return { cardData, submitForm };

@@ -37,7 +37,6 @@ async function createUser(user) {
 }
 
 // Fonctions pour les catégories
-
 async function getCategories() {
   const db = await dbPromise;
   const tx = db.transaction('categories', 'readonly');
@@ -54,7 +53,6 @@ async function createCategory(category) {
 }
 
 // Fonctions pour les cartes
-
 async function getCards() {
   const db = await dbPromise;
   const tx = db.transaction('cards', 'readonly');

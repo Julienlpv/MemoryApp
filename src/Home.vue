@@ -2,8 +2,11 @@
 <template>
   <div>
     <h1>Quiz de mémorisation</h1>
-    <router-link to="/addquestion">Ajouter une question</router-link>
-    <router-link to="/quiz">Démarrer le quiz</router-link>
+    <nav>
+      <router-link to="/addquestion">Ajouter une question</router-link>
+      <router-link to="/addcategory">Ajouter une catégorie</router-link>
+      <router-link to="/quiz">Démarrer le quiz</router-link>
+    </nav>
   </div>
 </template>
 
@@ -24,3 +27,13 @@ export default {
   },
 };
 </script>
+
+<style>
+h1{
+  text-align: center;
+}
+nav{
+  display: flex;
+  text-align: center;
+}
+</style>
