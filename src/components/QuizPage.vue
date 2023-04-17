@@ -1,54 +1,81 @@
-<!-- src/pages/QuizPage.vue -->
 <template>
-    <div class="carte">
-        <div v-if="!questionAsked">
-            <h2>{{ cards[currentQuestionIndex].question }}</h2>
-            <input v-model="userAnswer" type="text" />
-            <button class="btn" @click="checkAnswer">Valider</button>
+    <div>
+        <h1>Quiz Page</h1>
+        <div>{{ Message }}</div>
+        <button v-if="showNextQuestion" @click="nextQuestion">Prochaine question</button>
+
+        <div v-if="currentCard && !showNextQuestion">
+            <h2>{{ currentCard.question }}</h2>
+            <input v-model="userAnswer" @keydown.enter="submitAnswer" />
+            <button @click="submitAnswer">Submit</button> 
         </div>
-        <div class="btn-container" v-else>
-            <h2>Bravo !</h2>
-            <button @click="nextQuestion">Question suivante</button>
+        <div v-else>
+            <h2>Finito pipo pour aujourd'hui!</h2>
         </div>
     </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { useQuizStore } from '../stores/quizStore';
+import { ref, computed } from "vue";
+import { useQuizStore } from "../stores/quizStore";
 
 export default {
     setup() {
         const quizStore = useQuizStore();
-        const cards = quizStore.cards;
-        const currentQuestionIndex = ref(0);
-        const userAnswer = ref('');
-        const questionAsked = ref(false);
+        const userAnswer = ref("");
+        const Message = ref("");
+        const showNextQuestion = ref(false);
+        const filteredCards = computed(() => quizStore.filteredCards);
 
-        const checkAnswer = () => {
-            if (userAnswer.value === cards[currentQuestionIndex.value].answer) {
-                questionAsked.value = true;
-            } else {
-                alert("Désolé, ce n'est pas la bonne réponse.");
-            }
-        };
-
-        const nextQuestion = () => {
-            currentQuestionIndex.value += 1;
-            questionAsked.value = false;
-            userAnswer.value = '';
-        };
-
-        onMounted(() => {
-            if (cards.length === 0) {
-                alert("Il n'y a pas de questions enregistrées.");
-            }
+        const currentCard = computed(() => {
+            return filteredCards.value.length > 0 ? filteredCards.value[0] : null;
         });
 
-        return { cards, currentQuestionIndex, userAnswer, questionAsked, checkAnswer, nextQuestion };
+        function nextQuestion() {
+            quizStore.refreshCards();
+            userAnswer.value = "";
+            Message.value = "";
+            showNextQuestion.value = false;
+        }
+
+        const submitAnswer = () => {
+            if (userAnswer.value.trim() === "") {
+                return;
+            }
+
+            const isCorrect =
+                userAnswer.value.toLowerCase().trim() ===
+                currentCard.value.answer.toLowerCase().trim();
+
+            if (isCorrect) {
+                console.log('bibi');
+                Message.value = "Bravo, vous passez au niveau suivant!";
+                quizStore.answerCard(quizStore.cards.indexOf(currentCard.value), true);
+                showNextQuestion.value = true;
+            }
+            else {
+                Message.value = "Mauvaise réponse, vous revenez au niveau 1";
+                quizStore.answerCard(quizStore.cards.indexOf(currentCard.value), false);
+                showNextQuestion.value = false;
+                
+            }
+
+            userAnswer.value = "";
+        };
+
+        return {
+            currentCard,
+            userAnswer,
+            submitAnswer,
+            Message,
+            nextQuestion,
+            showNextQuestion,
+        };
     },
 };
 </script>
+
+
 
 
 <style scoped>
@@ -61,14 +88,21 @@ export default {
 
 input { 
     width: 80%;
+      max-width: 800px;
+  display: block;
+    margin-left: auto;
+   margin-right: auto;
 }
 
-.btn-container {
-   
+h2 {
+   margin-left: 5%;
 }
 
 .btn  {
-    text-align: center;
+      max-width: 800px;
+  display: block;
+    margin-left: auto;
+   margin-right: auto;
 }
 
 </style>
