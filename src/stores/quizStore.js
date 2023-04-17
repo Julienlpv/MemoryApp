@@ -29,8 +29,11 @@ function saveCategoriesToStorage(cards) {
 
 export const useQuizStore = defineStore('quiz', {
   state: () => ({
-    cards: loadCardsFromStorage(),
-    category: loadCategoryFromStorage(),
+    cards: loadCardsFromStorage().map((card) => ({
+      ...card,
+      lastAnswered: card.lastAnswered ? new Date(card.lastAnswered) : null,
+      correctStreak: card.correctStreak || 0,
+    })),
   }),
   actions: {
     addCard(card) {
@@ -44,19 +47,63 @@ export const useQuizStore = defineStore('quiz', {
     deleteCard(index) {
       this.cards.splice(index, 1);
       saveCardsToStorage(this.cards);
-    },
+      },
+    
+    
+    shouldShowQuestion(card) {
+      const now = new Date();
+      const daysSinceLastAnswered = card.lastAnswered ? (now - card.lastAnswered) / (1000 * 60 * 60 * 24) : Number.POSITIVE_INFINITY;
+        console.log('daysSinceLastAnswered' + daysSinceLastAnswered);
+        
+        console.log(card.correctStreak);
+        
+      switch (card.correctStreak) {
+        case 0:
+        case 1:
+          return daysSinceLastAnswered >= 1;
+        case 2:
+          return daysSinceLastAnswered >= 3;
+        case 3:
+          return daysSinceLastAnswered >= 6;
+        default:
+          return daysSinceLastAnswered >= 18;
+      }
+      },
+    
+    answerCard(index, isCorrect) {
+      const card = this.cards[index];
+        // card.lastAnswered = new Date();
 
-    addCategory(category) {
-      this.categories.push(category);
-      saveCategoriesToStorage(this.categories);
-    },
-    updateCategory(index, updatedCategory) {
-      this.categories.splice(index, 1, updatedCategory);
-      saveCategoriesToStorage(this.categories);
-    },
-    deleteCategory(index) {
-      this.categories.splice(index, 1);
-      saveCategoriesToStorage(this.categories);
+        // TESTS 3J AVANT POUR LE JUSTE ET LE FAUX : OK
+        card.lastAnswered = new Date(Date.now() -  3* (24 * 60 * 60 * 1000));
+        
+        console.log('Last ANSWERED ' + card.lastAnswered);
+      if (isCorrect) {
+        card.correctStreak++;
+      } else {
+        card.correctStreak = 0;
+      }
+      saveCardsToStorage(this.cards);
+      },
+    
+    refreshCards() {
+    const availableCards = this.filteredCards;
+    if (availableCards.length === 0) {
+        this.currentCardIndex = -1;
+    } else {
+    const currentCard = this.cards[this.currentCardIndex];
+    if (!currentCard || currentCard.correctStreak > 0) {
+      const newIndex = Math.floor(Math.random() * availableCards.length);
+      this.currentCardIndex = this.cards.indexOf(availableCards[newIndex]);
+    }
+  }
+}
+
+
+  },
+  getters: {
+    filteredCards(state) {
+      return state.cards.filter((card) => this.shouldShowQuestion(card));
     },
   },
 });
