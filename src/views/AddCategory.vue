@@ -1,31 +1,32 @@
 <template>
-    <div>
+    <div v-if="categories">
         <h1>Ajouter une catégorie</h1>
-        <category-form @submit="refreshCards" />
+        <category-form @submit="getCategories" />
         <div class="cards">
-            <category-card v-for="(card, index) in cards" :key="index" :card="card" />
+            <div v-for="(category, index) in categories" :key="index" :category="category" >
+                {{ category.category }}
+            </div>
         </div>
+    </div>
+    <div v-else>
+        Erreur
     </div>
 </template>
 
 <script>
 import CategoryForm from '../components/CategoryForm.vue';
-import CategoryCard from '../components/CategoryCard.vue';
 import { useQuizStore } from '../stores/quizStore';
 
 export default {
     components: {
         CategoryForm,
-        CategoryCard,
     },
     setup() {
         const quizStore = useQuizStore();
-        
-        function refreshCards() {
-            quizStore.refreshCards();
+        function getCategories() {
+            quizStore.getCategories();
         }
-
-        return { categories: quizStore.categories, refreshCards };
+        return { categories: quizStore.categories, getCategories};
     },
 };
 </script>

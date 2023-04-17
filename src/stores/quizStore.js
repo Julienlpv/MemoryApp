@@ -21,8 +21,8 @@ function loadCategoryFromStorage() {
 function saveCardsToStorage(cards) {
   localStorage.setItem(STORAGE_KEY[0], JSON.stringify(cards));
 }
-function saveCategoriesToStorage(cards) {
-  localStorage.setItem(STORAGE_KEY[0], JSON.stringify(cards));
+function saveCategoriesToStorage(categories) {
+  localStorage.setItem(STORAGE_KEY[1], JSON.stringify(categories));
 }
 
 
@@ -34,6 +34,10 @@ export const useQuizStore = defineStore('quiz', {
       lastAnswered: card.lastAnswered ? new Date(card.lastAnswered) : null,
       correctStreak: card.correctStreak || 0,
     })),
+
+    categories: loadCategoryFromStorage().map((category) => ({
+      ...category,
+    }))
   }),
   actions: {
     addCard(card) {
@@ -47,6 +51,19 @@ export const useQuizStore = defineStore('quiz', {
     deleteCard(index) {
       this.cards.splice(index, 1);
       saveCardsToStorage(this.cards);
+      },
+
+    addCategory(category) {
+      this.categories.push(category);
+      saveCategoriesToStorage(this.categories);
+    },
+    updateCategory(index, updatedCategory) {
+      this.categories.splice(index, 1, updatedCategory);
+      saveCategoriesToStorage(this.categories);
+    },
+    deleteCategory(index) {
+      this.categories.splice(index, 1);
+      saveCategoriesToStorage(this.categories);
       },
     
     
@@ -87,17 +104,17 @@ export const useQuizStore = defineStore('quiz', {
       },
     
     refreshCards() {
-    const availableCards = this.filteredCards;
-    if (availableCards.length === 0) {
-        this.currentCardIndex = -1;
-    } else {
-    const currentCard = this.cards[this.currentCardIndex];
-    if (!currentCard || currentCard.correctStreak > 0) {
-      const newIndex = Math.floor(Math.random() * availableCards.length);
-      this.currentCardIndex = this.cards.indexOf(availableCards[newIndex]);
-    }
-  }
-}
+      const availableCards = this.filteredCards;
+      if (availableCards.length === 0) {
+          this.currentCardIndex = -1;
+      } else {
+        const currentCard = this.cards[this.currentCardIndex];
+        if (!currentCard || currentCard.correctStreak > 0) {
+          const newIndex = Math.floor(Math.random() * availableCards.length);
+          this.currentCardIndex = this.cards.indexOf(availableCards[newIndex]);
+        }
+      }
+    },
 
 
   },
@@ -105,5 +122,8 @@ export const useQuizStore = defineStore('quiz', {
     filteredCards(state) {
       return state.cards.filter((card) => this.shouldShowQuestion(card));
     },
+    getCategories(state){
+      return state.categories;
+    }
   },
 });

@@ -7,10 +7,10 @@
         <label for="answer">Réponse :</label>
         <input type="text" id="answer" v-model="cardData.answer" required />
         
-        <select v-model="selected">
+        <select v-model="cardData.category">
             <option disabled value="">Choisissez</option>
-            <option v-for="option in options" v-bind:key="option.value">
-                {{ option.text }}
+            <option v-for="(category, index) in categories" :key="index" :category="category" >
+                {{ category.category }}
             </option>
         </select>
         <span>Sélectionné : {{ selected }}</span>
@@ -41,7 +41,7 @@ export default {
             cardData.value = { question: '', answer: '', category: '' };
         };
 
-        return { cardData, submitForm };
+        return { cardData, submitForm, categories: quizStore.categories };
     },
 };
 </script>
