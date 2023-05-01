@@ -73,17 +73,35 @@ export const useQuizStore = defineStore('quiz', {
         console.log('daysSinceLastAnswered' + daysSinceLastAnswered);
         
         console.log(card.correctStreak);
+
+        let nbNiveau = 0
+        let tab=[]
+        for(var i=1; i<nbNiveau+1; i++){
+          for(var j=1; j<i; j++ ){
+            if(i%(j*2)==0 ){
+              tab.push(j)
+            }
+          }
+        }
+          
         
+    
+      
+
+      // 
+      // 1 - 2 - 4 - 12 - 24 - 56
+
+
       switch (card.correctStreak) {
         case 0:
         case 1:
           return daysSinceLastAnswered >= 1;
         case 2:
-          return daysSinceLastAnswered >= 3;
+          return daysSinceLastAnswered >= 3;// *2
         case 3:
-          return daysSinceLastAnswered >= 6;
+          return daysSinceLastAnswered >= 6;// *3 
         default:
-          return daysSinceLastAnswered >= 18;
+          return daysSinceLastAnswered >= 18;// *4
       }
       },
     
