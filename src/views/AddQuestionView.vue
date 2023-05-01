@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import QuizForm from './QuizForm.vue';
-import QuizCard from './QuizCard.vue';
+import QuizForm from '../components/QuizForm.vue';
+import QuizCard from '../components/QuizCard.vue';
 import { useQuizStore } from '../stores/quizStore';
 
 export default {

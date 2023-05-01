@@ -76,3 +76,13 @@ flowchart TD
     D --> E
     B --> E(Merge 1)
 ```
+## Reste à faire 
+
+* Algo de repetition espacée - Samy
+* Playlist - Julien
+* Vue pour commencer un thème (nb de jours + nouvelles cartes chaque jour)
+  
+* Notification push quotidienne - Julien
+* PWA - service worker + manifest - Samy
+* Deploiement - ensemble
+* Readme - ensemble

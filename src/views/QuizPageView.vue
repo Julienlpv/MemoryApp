@@ -7,7 +7,7 @@
         <div v-if="currentCard && !showNextQuestion">
             <h2>{{ currentCard.question }}</h2>
             <input v-model="userAnswer" @keydown.enter="submitAnswer" />
-            <button @click="submitAnswer">Submit</button> 
+            <button @click="submitAnswer">Envoyer la réponse</button> 
         </div>
         <div v-else>
             <h2>Finito pipo pour aujourd'hui!</h2>
