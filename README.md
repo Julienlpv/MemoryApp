@@ -13,12 +13,7 @@ npm run dev
 ```
 
 ### Mise en prod
-<<<<<<< HEAD
 Hebergement chez Alwaysdata, http://frontynovb3.alwaysdata.net/
-=======
-
-Si on est CHAUD
->>>>>>> origin/Julien-le-bg
 
 <hr>
 
@@ -49,17 +44,10 @@ Non implémenté
 <hr>
 
 ## Préparer la OU les liste/s
-<<<<<<< HEAD
 * Choix du nombre de cartes ajoutées / jour  
     Non implémenté
 * Choix du nombre de niveaux  
     Non implémenté
-=======
-
-- Choix du nombre de cartes ajoutées / jour
-- Choix du nombre de niveaux
-
->>>>>>> origin/Julien-le-bg
 <hr>
 
 ## Répétition espacée
@@ -83,7 +71,6 @@ Il y a cependant la v1 de la répétition (celle du site), mais non dynamique, o
 <hr>
 
 ## PWA
-<<<<<<< HEAD
 ### Service Worker
 Fonctionnable hors ligne
 ### Manifest
@@ -96,26 +83,6 @@ En cours avec Firebase pour le serveur d'envoie de notifications
 ## Techno en plus
 * firebase
 * indexedb fonctionnel mais non implémenté (dans db.js)
-=======
-
-### Service Worker
-
-Fonctionnable hors ligne
-
-### Manifest
-
-### Notification push
-
-Mettre en place un rappel quotidien
-
-<hr>
-
-## Techno
-
-- VueJS 3
-- Store pinia
-- vue-router
->>>>>>> origin/Julien-le-bg
 
 <hr>
 
@@ -125,7 +92,6 @@ flowchart TD
     A[Initialisation du projet] --> B(Branche Samy)
     A[Initialisation du projet] --> C(Branche Julien)
     B --> E(Merge 1)
-<<<<<<< HEAD
     C --> L(indexeDB)
     L --> E
     E --> F(Creation questions)
@@ -147,17 +113,3 @@ flowchart TD
 * Partage des playlists
 * Vue pour commencer un thème (nb de jours + nouvelles cartes chaque jour)
 * Notification push quotidienne
-=======
-```
-
-## Reste à faire
-
-- Algo de repetition espacée - Samy
-- Playlist - Julien ( Creation d'un theme: contient des questions qui ont elles mêmes des catégories, possibilité d'ajouter
-des questions de différentes catégories )
-- Vue pour commencer un thème (nb de jours + nouvelles cartes chaque jour)
-- Notification push quotidienne - Julien
-- PWA - service worker + manifest - Samy
-- Deploiement - ensemble
-- Readme - ensemble
->>>>>>> origin/Julien-le-bg
