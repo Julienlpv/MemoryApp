@@ -74,24 +74,100 @@ export const useQuizStore = defineStore('quiz', {
         
         console.log(card.correctStreak);
 
-        let nbNiveau = 0
-        let tab=[]
-        for(var i=1; i<nbNiveau+1; i++){
-          for(var j=1; j<i; j++ ){
-            if(i%(j*2)==0 ){
-              tab.push(j)
-            }
-          }
-        }
-          
-        
-    
+
+        /////////////////
+        ///REPETITION////
+        /////////////////
+        let createTab = (days) => {
+          let resultArray = [];
+          let breaksArray = [];
+          const daysArray = Array.from(Array(days).keys()).map(index => index + 1);
+          let continueFlag = true;
+  
+          console.log(daysArray);
+  
+          breaksArray = daysArray.map(day => {
+              if(continueFlag){
+                  let computedInterval = (2 ** (day - 1));
+                  const computedDaysAppearance = daysArray.map(d => {
+                      if(d % computedInterval == 0) return day;
+                      return 'no';
+                  });
+                  continueFlag = false;
+                  computedDaysAppearance.forEach(day => {
+                      if(day != "no") continueFlag = true;
+                  });
+  
+                  return {
+                      level: day,
+                      interval: computedInterval,
+                      daysAppearance: computedDaysAppearance
+                  };
+              } else {
+                  return {
+                      level: day,
+                      interval: 'nope',
+                      daysAppearance: Array.from(Array(days).keys()).map(index => 'no')
+                  }
+              }
+          });
+  
+          console.table(breaksArray.map(b => {
+              return {
+                  level: b?.level,
+                  interval: b?.interval,
+                  daysAppearance: b?.daysAppearance.toString()
+              };
+          }));
+  
+          console.log(breaksArray.map(ba => ba?.daysAppearance).filter(item => item));
+          let invertedDaysAppearance = transposeArray(breaksArray.map(ba => ba?.daysAppearance).filter(item => item));
+          console.log(invertedDaysAppearance);
+  
+          resultArray = breaksArray.map((b, index) => {
+              return {
+                  day: index + 1,
+                  levelMax: (() => {
+                      let lvlMax = 0;
+                      b?.daysAppearance.forEach(da => {
+                          if(da[index] != 'no') lvlMax = da[index];
+                      });
+                      return lvlMax;
+                  }).apply(),
+                  interval: b?.interval
+              };
+          });
+  
+          console.table(resultArray);
+          return resultArray;
+      };
+  
+      function transposeArray(array){
+          let arrayLength = array.length;
+          var newArray = [];
+          for(let i = 0; i < array.length; i++){
+              newArray.push([]);
+          };
+  
+          for(let i = 0; i < array.length; i++){
+              for(var j = 0; j < arrayLength; j++){
+                  newArray[j].push(array[i][j]);
+              };
+          };
+  
+          return newArray;
+      }
+      
+      let nbDay = 20;
+      let Finaltab = createTab(nbDay);
+
       
 
-      // 
-      // 1 - 2 - 4 - 12 - 24 - 56
+      ///////////////////////////////
+      //////FIN REPETITION///////////
+      ///////////////////////////////
 
-
+      
       switch (card.correctStreak) {
         case 0:
         case 1:
