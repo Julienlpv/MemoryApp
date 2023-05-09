@@ -4,6 +4,7 @@ import Home from '../Home.vue';
 import AddQuestion from '../views/AddQuestionView.vue';
 import AddCategory from '../views/AddCategoryView.vue';
 import CreateTheme from '../views/CreateThemeView.vue';
+import EditQuestion from '../views/EditQuestionView.vue'; 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,12 @@ const router = createRouter({
       name: 'add-question',
       component: (AddQuestion)
     },
+    {
+      path: '/edit-question/:index',
+      name: 'edit-question',
+      component: (EditQuestion)
+    },
+    
     {
       path: '/add-category',
       name: 'add-category',

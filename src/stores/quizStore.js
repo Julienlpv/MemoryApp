@@ -1,7 +1,6 @@
-// src/store/quizStore.js
 import { defineStore } from 'pinia';
 
-const STORAGE_KEY = ['quiz-cards', 'category-cards'];
+const STORAGE_KEY = ['quiz-cards', 'category-cards', 'theme-cards'];
 
 function loadCardsFromStorage() {
   const storedCards = localStorage.getItem(STORAGE_KEY[0]);
@@ -10,6 +9,7 @@ function loadCardsFromStorage() {
   }
   return [];
 }
+
 function loadCategoryFromStorage() {
   const storedCategories = localStorage.getItem(STORAGE_KEY[1]);
   if (storedCategories) {
@@ -18,14 +18,25 @@ function loadCategoryFromStorage() {
   return [];
 }
 
+function loadThemesFromStorage() {
+  const storedThemes = localStorage.getItem(STORAGE_KEY[2]);
+  if (storedThemes) {
+    return JSON.parse(storedThemes);
+  }
+  return [];
+}
+
 function saveCardsToStorage(cards) {
   localStorage.setItem(STORAGE_KEY[0], JSON.stringify(cards));
 }
+
 function saveCategoriesToStorage(categories) {
   localStorage.setItem(STORAGE_KEY[1], JSON.stringify(categories));
 }
 
-
+function saveThemesToStorage(themes) {
+  localStorage.setItem(STORAGE_KEY[2], JSON.stringify(themes));
+}
 
 export const useQuizStore = defineStore('quiz', {
   state: () => ({
@@ -37,21 +48,25 @@ export const useQuizStore = defineStore('quiz', {
 
     categories: loadCategoryFromStorage().map((category) => ({
       ...category,
-    }))
+    })),
+
+    themes: loadThemesFromStorage().map((theme) => ({
+      ...theme,
+    })),
   }),
   actions: {
     addCard(card) {
       this.cards.push(card);
       saveCardsToStorage(this.cards);
     },
-    updateCard(index, updatedCard) {
-      this.cards.splice(index, 1, updatedCard);
+    editCard(index, editedCard) {
+      this.cards.splice(index, 1, editedCard);
       saveCardsToStorage(this.cards);
     },
     deleteCard(index) {
       this.cards.splice(index, 1);
       saveCardsToStorage(this.cards);
-      },
+    },
 
     addCategory(category) {
       this.categories.push(category);
@@ -64,10 +79,22 @@ export const useQuizStore = defineStore('quiz', {
     deleteCategory(index) {
       this.categories.splice(index, 1);
       saveCategoriesToStorage(this.categories);
-      },
-    
-    
-    shouldShowQuestion(card) {
+    },
+
+    addTheme(theme) {
+      this.themes.push(theme);
+      saveThemesToStorage(this.themes);
+    },
+    updateTheme(index, updatedTheme) {
+      this.themes.splice(index, 1, updatedTheme);
+      saveThemesToStorage(this.themes);
+    },
+    deleteTheme(index) {
+      this.themes.splice(index, 1);
+      saveThemesToStorage(this.themes);
+    },
+
+        shouldShowQuestion(card) {
       const now = new Date();
       const daysSinceLastAnswered = card.lastAnswered ? (now - card.lastAnswered) / (1000 * 60 * 60 * 24) : Number.POSITIVE_INFINITY;
         console.log('daysSinceLastAnswered' + daysSinceLastAnswered);
@@ -175,7 +202,7 @@ export const useQuizStore = defineStore('quiz', {
         case 2:
           return daysSinceLastAnswered >= 3;// *2
         case 3:
-          return daysSinceLastAnswered >= 6;// *3 
+          return daysSinceLastAnswered >= 6;// *3
         default:
           return daysSinceLastAnswered >= 18;// *4
       }
@@ -218,6 +245,20 @@ export const useQuizStore = defineStore('quiz', {
     },
     getCategories(state){
       return state.categories;
-    }
+    },
+    getThemes(state) {
+      return state.themes
+    },
+    getQuestion(state) {
+      // Retourne une fonction qui prend un index en argument et renvoie la question correspondante
+      return (index) => {
+        if (index >= 0 && index < state.cards.length) {
+          return state.cards[index];
+        }
+        return null;
+      };
+    },
   },
 });
+
+
