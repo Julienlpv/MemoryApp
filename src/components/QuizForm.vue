@@ -1,4 +1,3 @@
-<!-- src/components/QuizForm.vue -->
 <template>
     <form @submit.prevent="submitForm">
         <label for="question">Question :</label>
@@ -6,16 +5,16 @@
 
         <label for="answer">Réponse :</label>
         <input type="text" id="answer" v-model="cardData.answer" required />
-        
+
         <select v-model="cardData.category">
             <option disabled value="">Choisissez</option>
-            <option v-for="(category, index) in categories" :key="index" :category="category" >
+            <option v-for="(category, index) in categories" :key="index" :category="category">
                 {{ category.category }}
             </option>
         </select>
-        <span>Sélectionné : {{ selected }}</span>
+        <span>Sélectionné : {{ cardData.category }}</span>
 
-        <button type="submit">Enregistrer</button>
+        <button type="submit">{{ isEditing ? 'Enregistrer' : 'Ajouter' }}</button>
     </form>
 </template>
 
@@ -30,18 +29,26 @@ export default {
     },
     setup(props) {
         const quizStore = useQuizStore();
+        const isEditing = ref(false);
         const cardData = ref(props.initialValues || { question: '', answer: '', category: '' });
-        
+
+        if (props.cardIndex !== undefined) {
+            isEditing.value = true;
+            const card = quizStore.cards[props.cardIndex];
+            cardData.value = { ...card };
+        }
+
         const submitForm = () => {
-            if (props.cardIndex !== undefined) {
-                quizStore.updateCard(props.cardIndex, cardData.value);
+            if (isEditing.value) {
+                quizStore.editCard(props.cardIndex, cardData.value);
             } else {
                 quizStore.addCard(cardData.value);
             }
             cardData.value = { question: '', answer: '', category: '' };
+            isEditing.value = false;
         };
 
-        return { cardData, submitForm, categories: quizStore.categories };
+        return { cardData, submitForm, categories: quizStore.categories, isEditing };
     },
 };
 </script>

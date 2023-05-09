@@ -1,20 +1,25 @@
 # memoryApp
 
 ## Déploiement
+
 ### local
+
 ```bash
 npm i
 ```
+
 ```bash
 npm run dev
 ```
+
 ### Mise en prod
+
 Si on est CHAUD
 
 <hr>
 
-
 ## Authentification des utilisateurs
+
 ### Gestion du store
 
 <hr>
@@ -24,7 +29,9 @@ Si on est CHAUD
 <hr>
 
 ## Création de cartes
+
 ### Recto-verso
+
 Question - réponse pour chaque carte
 
 <hr>
@@ -38,8 +45,9 @@ Question - réponse pour chaque carte
 <hr>
 
 ## Préparer la OU les liste/s
-* Choix du nombre de cartes ajoutées / jour
-* Choix du nombre de niveaux
+
+- Choix du nombre de cartes ajoutées / jour
+- Choix du nombre de niveaux
 
 <hr>
 
@@ -48,19 +56,24 @@ Question - réponse pour chaque carte
 <hr>
 
 ## PWA
-### Service Worker
-Fonctionnable hors ligne
-### Manifest
-### Notification push
-Mettre en place un rappel quotidien
 
+### Service Worker
+
+Fonctionnable hors ligne
+
+### Manifest
+
+### Notification push
+
+Mettre en place un rappel quotidien
 
 <hr>
 
 ## Techno
-* VueJS 3
-* Store pinia
-* vue-router
+
+- VueJS 3
+- Store pinia
+- vue-router
 
 <hr>
 
@@ -76,13 +89,14 @@ flowchart TD
     D --> E
     B --> E(Merge 1)
 ```
-## Reste à faire 
 
-* Algo de repetition espacée - Samy
-* Playlist - Julien
-* Vue pour commencer un thème (nb de jours + nouvelles cartes chaque jour)
-  
-* Notification push quotidienne - Julien
-* PWA - service worker + manifest - Samy
-* Deploiement - ensemble
-* Readme - ensemble
+## Reste à faire
+
+- Algo de repetition espacée - Samy
+- Playlist - Julien ( Creation d'un theme: contient des questions qui ont elles mêmes des catégories, possibilité d'ajouter
+des questions de différentes catégories )
+- Vue pour commencer un thème (nb de jours + nouvelles cartes chaque jour)
+- Notification push quotidienne - Julien
+- PWA - service worker + manifest - Samy
+- Deploiement - ensemble
+- Readme - ensemble
