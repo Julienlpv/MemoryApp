@@ -5,11 +5,12 @@
 <template>
     <div>
         <h1>Ajouter une question</h1>
-        <quiz-form :categories="categories" :themes="themes" @submit="addCard" />
+        <!-- <quiz-form :categories="categories" :themes="themes" @submit="addCard" /> -->
+        <quiz-form :categories="categories" :themes="themes" />
         <div class="cards">
             <!-- <quiz-card v-for="(card, index) in cards" :key="index" :card="card" 
             :index="index" @delete-card="deleteCard(index)  @edit-card="editCard(index, card) /> -->
-                <quiz-card v-for="(card, index) in cards" :key="index" :card="card" 
+            <quiz-card v-for="(card, index) in cards" :key="index" :card="card" 
             :index="index" @delete-card="deleteCard(index)" @edit-card="editCard(index, card)" />
                 
         </div>

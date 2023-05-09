@@ -14,7 +14,7 @@
                     {{ category.category }}
                 </option>
             </select>
-            <span>Sélectionné : {{ questionData.category }}</span>
+            <span>Sélectionné : {{ questionData.category}}</span>
 
             <button type="submit">Enregistrer</button>
         </form>
@@ -27,14 +27,13 @@ import { useQuizStore } from '../stores/quizStore';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
-    setup() {
+    setup(props) {
         const router = useRouter();
         const route = useRoute();
         const quizStore = useQuizStore();
         const questionIndex = parseInt(route.params.index);
         const questionData = ref(quizStore.cards[questionIndex]);
 
-        const categories = quizStore.categories.map(category => ({ category }));
 
         const submitForm = () => {
             quizStore.editCard(questionIndex, {
@@ -48,8 +47,8 @@ export default {
 
         return {
             questionData,
-            categories,
             submitForm,
+            categories : quizStore.categories
         };
     },
 };
